@@ -1,0 +1,7 @@
+streamlit
+pandas
+supabase
+openpyxl
+matplotlib
+pillow
+python-dateutil
