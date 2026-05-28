@@ -34,6 +34,7 @@ def gerar_relatorio_imagem(
     colunas = [
 
         "data",
+        "controle_dav",
         "consultor",
         "produto",
         "erro",
@@ -60,6 +61,7 @@ def gerar_relatorio_imagem(
     tabela.columns = [
 
         "DATA",
+        "DAV"
         "CONSULTOR",
         "PRODUTO",
         "ERRO",
@@ -138,12 +140,13 @@ def gerar_relatorio_imagem(
 
         larguras = [
 
-            0.12,  # DATA
+            0.10,  # DATA
+            0.12,  # DAV
             0.33,  # CONSULTOR
             0.20,  # PRODUTO
-            0.18,  # ERRO
+            0.15,  # ERRO
             0.10,  # TIPO
-            0.17   # OBS
+            0.20   # OBS
 
         ]
 
@@ -152,12 +155,13 @@ def gerar_relatorio_imagem(
         larguras = [
 
             0.10,  # DATA
+            0.10,  # DAV
             0.25,  # CONSULTOR
             0.15,  # PRODUTO
             0.13,  # ERRO
             0.10,  # TIPO
             0.10,  # VALOR
-            0.17   # OBS
+            0.20   # OBS
 
         ]
 
