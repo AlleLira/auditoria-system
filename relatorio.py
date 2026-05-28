@@ -58,24 +58,35 @@ def gerar_relatorio_imagem(
     tabela = df[colunas]
 
 
-    tabela.columns = [
+    # NOMES DAS COLUNAS
+    if filtro_consultor:
 
-        "DATA",
-        "DAV"
-        "CONSULTOR",
-        "PRODUTO",
-        "ERRO",
-        "TIPO",
+        tabela.columns = [
 
-        *(
-            ["VALOR"]
-            if not filtro_consultor
-            else []
-        ),
+            "DATA",
+            "DAV",
+            "CONSULTOR",
+            "PRODUTO",
+            "ERRO",
+            "TIPO",
+            "OBSERVAÇÃO"
 
-        "OBSERVAÇÃO"
+        ]
 
-    ]
+    else:
+
+        tabela.columns = [
+
+            "DATA",
+            "DAV",
+            "CONSULTOR",
+            "PRODUTO",
+            "ERRO",
+            "TIPO",
+            "VALOR",
+            "OBSERVAÇÃO"
+
+        ]
 
 
     qtd_linhas = len(tabela)
@@ -97,6 +108,7 @@ def gerar_relatorio_imagem(
     ax.axis("off")
 
 
+    # TÍTULO
     fig.text(
 
         0.02,
@@ -114,6 +126,7 @@ def gerar_relatorio_imagem(
     )
 
 
+    # SUBTÍTULO
     fig.text(
 
         0.02,
@@ -136,6 +149,8 @@ def gerar_relatorio_imagem(
 
     )
 
+
+    # LARGURA DAS COLUNAS
     if filtro_consultor:
 
         larguras = [
@@ -154,17 +169,19 @@ def gerar_relatorio_imagem(
 
         larguras = [
 
-            0.10,  # DATA
+            0.08,  # DATA
             0.10,  # DAV
-            0.25,  # CONSULTOR
-            0.15,  # PRODUTO
+            0.22,  # CONSULTOR
+            0.14,  # PRODUTO
             0.13,  # ERRO
             0.10,  # TIPO
             0.10,  # VALOR
-            0.20   # OBS
+            0.13   # OBS
 
         ]
 
+
+    # TABELA
     table = ax.table(
 
         cellText=tabela.values,
@@ -194,7 +211,8 @@ def gerar_relatorio_imagem(
     )
 
 
-    for (row,col), cell in table.get_celld().items():
+    # ESTILIZAÇÃO
+    for (row, col), cell in table.get_celld().items():
 
         cell.set_edgecolor(
             "#BFBFBF"
@@ -248,6 +266,8 @@ def gerar_relatorio_imagem(
         bottom=0.02
 
     )
+
+
     plt.savefig(
 
         caminho,
