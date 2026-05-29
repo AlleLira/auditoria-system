@@ -787,26 +787,26 @@ with aba2:
             codigo = st.text_input(
                 "Código Produto"
             )
-
-
+            
+            
             produto = ""
-
-
-            if codigo:
-
+            
+            
+            if codigo.strip():
+            
                 produto = buscar_produto_codigo(
-                    codigo
+                    codigo.strip()
                 )
-
-
+            
+            
             st.text_input(
-
+            
                 "Produto",
-
-                produto,
-
+            
+                value=produto,
+            
                 disabled=True
-
+            
             )
 
 
