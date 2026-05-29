@@ -95,6 +95,15 @@ def buscar_encomenda_dav(dav):
 
 def buscar_produto_codigo(codigo):
 
+    try:
+
+        codigo = int(codigo)
+
+    except:
+
+        return ""
+
+
     response = (
 
         supabase.table(
@@ -112,10 +121,12 @@ def buscar_produto_codigo(codigo):
 
     )
 
+
     if response.data:
 
         return response.data[0][
             "nome_produto"
         ]
+
 
     return ""
