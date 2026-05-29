@@ -168,37 +168,24 @@ def buscar_encomenda_dav(dav):
 
 
 def buscar_produto_codigo(codigo):
-
     try:
-
-        codigo = int(codigo)
-
+        codigo = int(codigo)  # ok, já que sua coluna é int4
     except:
-
         return ""
 
-
     response = (
-
         supabase
-
-        .table(
-            "codigos_produto"
-        )
-
-        .select("nome")
-
-        .eq(
-            "codigo",
-            codigo
-        )
-
+        .table("codigos_produto")
+        .select("nome")  # coluna correta é "nome"
+        .eq("codigo", codigo)
         .execute()
-
     )
 
-
     if response.data:
+        return response.data[0]["nome"]
+
+    return ""
+
 
         return response.data[0]["nome"]
 
