@@ -1,4 +1,5 @@
 from supabase_client import supabase
+import streamlit as st
 
 import pandas as pd
 
@@ -95,11 +96,15 @@ def buscar_encomenda_dav(dav):
 
 def buscar_produto_codigo(codigo):
 
+    st.write("Código recebido:", codigo)
+
     try:
 
         codigo = int(codigo)
 
-    except:
+    except Exception as e:
+
+        st.write("Erro conversão:", e)
 
         return ""
 
@@ -110,9 +115,7 @@ def buscar_produto_codigo(codigo):
             "codigos_produto"
         )
 
-        .select(
-            "nome"
-        )
+        .select("*")
 
         .eq(
             "codigo",
@@ -122,6 +125,10 @@ def buscar_produto_codigo(codigo):
         .execute()
 
     )
+
+    st.write("Resposta Supabase:")
+
+    st.write(response.data)
 
 
     if response.data:
