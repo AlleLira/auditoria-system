@@ -99,9 +99,7 @@ def buscar_produto_codigo(codigo):
 
         codigo = int(codigo)
 
-    except Exception as e:
-
-        print(e)
+    except:
 
         return ""
 
@@ -124,9 +122,6 @@ def buscar_produto_codigo(codigo):
         .execute()
 
     )
-
-
-    print(response.data)
 
 
     if response.data:
