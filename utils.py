@@ -96,12 +96,19 @@ def buscar_encomenda_dav(dav):
 
 def buscar_produto_codigo(codigo):
 
-    codigo = str(codigo).strip()
+    try:
+
+        codigo = int(codigo)
+
+    except:
+
+        return ""
 
 
     response = (
 
-        supabase.table(
+        supabase
+        .table(
             "codigos_produto"
         )
 
@@ -109,8 +116,9 @@ def buscar_produto_codigo(codigo):
             "nome"
         )
 
-        .eq(
+        .filter(
             "codigo",
+            "eq",
             codigo
         )
 
@@ -119,10 +127,15 @@ def buscar_produto_codigo(codigo):
     )
 
 
-    st.write(response.data)
+    print(response.data)
 
 
-    if response.data:
+    if response.data and len(response.data) > 0:
+
+        return response.data[0]["nome"]
+
+
+    return ""
 
         return response.data[0]["nome"]
 
