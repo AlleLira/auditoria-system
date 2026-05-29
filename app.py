@@ -793,22 +793,31 @@ with aba2:
                 "Código Produto"
             )
             
-            produto_placeholder = st.empty()
             
             produto = ""
             
-            if codigo:
+            
+            if st.button(
+                "Buscar Produto"
+            ):
             
                 produto = buscar_produto_codigo(
                     codigo
                 )
             
+                st.session_state.produto_encontrado = produto
             
-            produto_placeholder.text_input(
+            
+            if "produto_encontrado" not in st.session_state:
+            
+                st.session_state.produto_encontrado = ""
+            
+            
+            st.text_input(
             
                 "Produto",
             
-                value=produto,
+                value=st.session_state.produto_encontrado,
             
                 disabled=True
             
@@ -855,7 +864,7 @@ with aba2:
                             codigo,
                             
                             "produto":
-                            produto,
+                            st.session_state.produto_encontrado,
 
                             "quantidade":
                             quantidade
