@@ -96,17 +96,7 @@ def buscar_encomenda_dav(dav):
 
 def buscar_produto_codigo(codigo):
 
-    st.write("Código recebido:", codigo)
-
-    try:
-
-        codigo = int(codigo)
-
-    except Exception as e:
-
-        st.write("Erro conversão:", e)
-
-        return ""
+    codigo = str(codigo).strip()
 
 
     response = (
@@ -115,7 +105,9 @@ def buscar_produto_codigo(codigo):
             "codigos_produto"
         )
 
-        .select("*")
+        .select(
+            "nome"
+        )
 
         .eq(
             "codigo",
@@ -126,7 +118,6 @@ def buscar_produto_codigo(codigo):
 
     )
 
-    st.write("Resposta Supabase:")
 
     st.write(response.data)
 
