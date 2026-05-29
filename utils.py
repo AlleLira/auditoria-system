@@ -186,8 +186,3 @@ def buscar_produto_codigo(codigo):
 
     return ""
 
-
-        return response.data[0]["nome"]
-
-
-    return ""
