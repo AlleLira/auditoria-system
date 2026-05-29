@@ -169,20 +169,24 @@ def buscar_encomenda_dav(dav):
 
 def buscar_produto_codigo(codigo):
     try:
-        codigo = int(codigo)  # ok, já que sua coluna é int4
-    except:
+        codigo_int = int(str(codigo).strip())  # garante inteiro sem espaços
+    except ValueError:
         return ""
 
     response = (
         supabase
         .table("codigos_produto")
-        .select("nome")  # coluna correta é "nome"
-        .eq("codigo", codigo)
+        .select("nome")
+        .eq("codigo", codigo_int)
         .execute()
     )
+
+    # Debug: veja o que vem do banco
+    print("Resposta Supabase:", response.data)
 
     if response.data:
         return response.data[0]["nome"]
 
     return ""
+
 
