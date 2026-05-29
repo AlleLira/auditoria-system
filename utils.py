@@ -62,3 +62,60 @@ def excluir_pendencia(id_p):
         )
         .execute()
     )
+
+def salvar_entrada_produto(dados):
+    (
+        supabase.table(
+            "entrada_produtos"
+        ).insert(
+            dados
+        ).execute()
+    )
+
+def buscar_encomenda_dav(dav):
+
+    response = (
+
+        supabase.table(
+            "entrada_produtos"
+        )
+
+        .select("*")
+
+        .eq(
+            "dav",
+            dav
+        )
+
+        .execute()
+
+    )
+
+    return response.data
+
+def buscar_produto_codigo(codigo):
+
+    response = (
+
+        supabase.table(
+            "codigos_produto"
+        )
+
+        .select("*")
+
+        .eq(
+            "id",
+            codigo
+        )
+
+        .execute()
+
+    )
+
+    if response.data:
+
+        return response.data[0][
+            "nome_produto"
+        ]
+
+    return ""
