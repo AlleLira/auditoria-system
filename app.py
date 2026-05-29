@@ -704,7 +704,8 @@ with aba1:
         editar_modal()
 
 with aba2:
-        st.title(
+
+    st.title(
         "Encomendas / Pré-ordens Antigas"
     )
 
@@ -714,6 +715,7 @@ with aba2:
     )
 
 
+    # NOVA ENTRADA
     with col1:
 
         if st.button(
@@ -837,6 +839,7 @@ with aba2:
             modal_encomenda()
 
 
+    # BUSCAR DAV
     with col2:
 
         if st.button(
