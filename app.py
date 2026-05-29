@@ -766,6 +766,7 @@ with aba2:
                     st.success(f"Produto encontrado: {resultado}")
                 else:
                     st.warning("Nenhum produto encontrado para esse código.")
+
     
             st.text_input(
                 "Produto",
