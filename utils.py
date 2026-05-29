@@ -113,7 +113,7 @@ def buscar_produto_codigo(codigo):
         .select("*")
 
         .eq(
-            "id",
+            "codigo",
             codigo
         )
 
@@ -125,7 +125,7 @@ def buscar_produto_codigo(codigo):
     if response.data:
 
         return response.data[0][
-            "nome_produto"
+            "nome"
         ]
 
 
