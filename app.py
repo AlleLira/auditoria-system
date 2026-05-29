@@ -754,17 +754,15 @@ with aba2:
             data = st.date_input("Data")
             dav = st.text_input("DAV")
     
-            codigo_produto = st.text_input("Código Produto")
+            codigo_produto = st.text_input("Código Produto", key="codigo_produto")
     
             if "produto_encontrado" not in st.session_state:
                 st.session_state.produto_encontrado = ""
     
             if st.button("Buscar Produto"):
-                codigo_digitado = st.session_state.codigo_produto
+                codigo_digitado = st.session_state.codigo_produto  # agora existe
                 resultado = buscar_produto_codigo(codigo_digitado)
                 st.session_state.produto_encontrado = resultado
-            
-                st.write("DEBUG:", resultado)  # mostra na tela o que veio
             
                 if resultado:
                     st.success(f"Produto encontrado: {resultado}")
