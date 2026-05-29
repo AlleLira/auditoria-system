@@ -793,9 +793,7 @@ with aba2:
                 "Código Produto"
             )
             
-            
             produto = ""
-            
             
             if st.button(
                 "Buscar Produto"
@@ -822,7 +820,6 @@ with aba2:
                 disabled=True
             
             )
-
 
             quantidade = st.number_input(
 
