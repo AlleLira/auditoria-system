@@ -710,91 +710,121 @@ with aba2:
     )
 
 
-    col1, col2 = st.columns(
-        2
-    )
+    # CONTROLE DOS POPUPS
+    if "abrir_nova_encomenda" not in st.session_state:
+
+        st.session_state.abrir_nova_encomenda = False
 
 
-    # NOVA ENTRADA
+    if "abrir_busca_dav" not in st.session_state:
+
+        st.session_state.abrir_busca_dav = False
+
+
+    col1, col2 = st.columns(2)
+
+
+    # BOTÃO NOVA ENTRADA
     with col1:
 
         if st.button(
             "➕ Nova Entrada"
         ):
 
+            st.session_state.abrir_nova_encomenda = True
 
-            @st.dialog(
-                "Cadastrar Encomenda"
+
+    # BOTÃO BUSCAR DAV
+    with col2:
+
+        if st.button(
+            "🔎 Buscar DAV"
+        ):
+
+            st.session_state.abrir_busca_dav = True
+
+
+    # MODAL NOVA ENCOMENDA
+    if st.session_state.abrir_nova_encomenda:
+
+
+        @st.dialog(
+            "Cadastrar Encomenda"
+        )
+        def modal_encomenda():
+
+            bloco = st.selectbox(
+
+                "Bloco",
+
+                BLOCOS
+
             )
-            def modal_encomenda():
 
-                bloco = st.selectbox(
 
-                    "Bloco",
+            loja = st.selectbox(
 
-                    BLOCOS
+                "Loja",
 
+                LOJAS.get(
+                    bloco,
+                    []
+                )
+
+            )
+
+
+            data = st.date_input(
+                "Data"
+            )
+
+
+            dav = st.text_input(
+                "DAV"
+            )
+
+
+            codigo = st.text_input(
+                "Código Produto"
+            )
+
+
+            produto = ""
+
+
+            if codigo:
+
+                produto = buscar_produto_codigo(
+                    codigo
                 )
 
 
-                loja = st.selectbox(
+            st.text_input(
 
-                    "Loja",
+                "Produto",
 
-                    LOJAS.get(
-                        bloco,
-                        []
-                    )
+                produto,
 
-                )
+                disabled=True
 
-
-                data = st.date_input(
-                    "Data"
-                )
+            )
 
 
-                dav = st.text_input(
-                    "DAV"
-                )
+            quantidade = st.number_input(
+
+                "Quantidade",
+
+                min_value=1,
+
+                step=1
+
+            )
 
 
-                codigo = st.text_input(
-                    "Código Produto"
-                )
+            col_salvar, col_cancelar = st.columns(2)
 
 
-                produto = ""
-
-
-                if codigo:
-
-                    produto = buscar_produto_codigo(
-                        codigo
-                    )
-
-
-                st.text_input(
-
-                    "Produto",
-
-                    produto,
-
-                    disabled=True
-
-                )
-
-
-                quantidade = st.number_input(
-
-                    "Quantidade",
-
-                    min_value=1,
-
-                    step=1
-
-                )
-
+            with col_salvar:
 
                 if st.button(
                     "Salvar"
@@ -829,6 +859,8 @@ with aba2:
 
                     )
 
+                    st.session_state.abrir_nova_encomenda = False
+
                     st.success(
                         "Cadastro realizado!"
                     )
@@ -836,64 +868,80 @@ with aba2:
                     st.rerun()
 
 
-            modal_encomenda()
+            with col_cancelar:
+
+                if st.button(
+                    "Cancelar"
+                ):
+
+                    st.session_state.abrir_nova_encomenda = False
+
+                    st.rerun()
 
 
-    # BUSCAR DAV
-    with col2:
-
-        if st.button(
-            "🔎 Buscar DAV"
-        ):
+        modal_encomenda()
 
 
-            @st.dialog(
-                "Buscar Encomenda"
+    # MODAL BUSCA DAV
+    if st.session_state.abrir_busca_dav:
+
+
+        @st.dialog(
+            "Buscar Encomenda"
+        )
+        def buscar_modal():
+
+            dav_busca = st.text_input(
+                "Digite a DAV"
             )
-            def buscar_modal():
 
-                dav_busca = st.text_input(
-                    "Digite a DAV"
+
+            if st.button(
+                "Buscar"
+            ):
+
+                resultado = buscar_encomenda_dav(
+                    dav_busca
                 )
 
 
-                if st.button(
-                    "Buscar"
-                ):
+                if resultado:
 
-                    resultado = buscar_encomenda_dav(
-                        dav_busca
+                    df = pd.DataFrame(
+                        resultado
+                    )
+
+                    df["data"] = pd.to_datetime(
+
+                        df["data"]
+
+                    ).dt.strftime(
+                        "%d/%m/%Y"
+                    )
+
+                    st.dataframe(
+
+                        df,
+
+                        use_container_width=True
+
+                    )
+
+                else:
+
+                    st.warning(
+                        "Nenhuma DAV encontrada"
                     )
 
 
-                    if resultado:
+            if st.button(
+                "Fechar"
+            ):
 
-                        df = pd.DataFrame(
-                            resultado
-                        )
+                st.session_state.abrir_busca_dav = False
 
-                        df["data"] = pd.to_datetime(
-
-                            df["data"]
-
-                        ).dt.strftime(
-                            "%d/%m/%Y"
-                        )
-
-                        st.dataframe(
-
-                            df,
-
-                            use_container_width=True
-
-                        )
-
-                    else:
-
-                        st.warning(
-                            "Nenhuma DAV encontrada"
-                        )
+                st.rerun()
 
 
-            buscar_modal()
+        buscar_modal()
     
