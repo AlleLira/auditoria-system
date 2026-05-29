@@ -99,7 +99,9 @@ def buscar_produto_codigo(codigo):
 
         codigo = int(codigo)
 
-    except:
+    except Exception as e:
+
+        print(e)
 
         return ""
 
@@ -110,7 +112,9 @@ def buscar_produto_codigo(codigo):
             "codigos_produto"
         )
 
-        .select("*")
+        .select(
+            "nome"
+        )
 
         .eq(
             "codigo",
@@ -122,11 +126,12 @@ def buscar_produto_codigo(codigo):
     )
 
 
+    print(response.data)
+
+
     if response.data:
 
-        return response.data[0][
-            "nome"
-        ]
+        return response.data[0]["nome"]
 
 
     return ""
