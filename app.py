@@ -784,26 +784,38 @@ with aba2:
             )
 
 
-            codigo = st.text_input(
-                "Código Produto"
-            )
+            if "produto_encontrado" not in st.session_state:
+            
+                st.session_state.produto_encontrado = ""
             
             
-            produto = ""
+            def atualizar_produto():
             
-            
-            if codigo.strip():
+                codigo_digitado = st.session_state.codigo_produto
             
                 produto = buscar_produto_codigo(
-                    codigo.strip()
+                    codigo_digitado
                 )
+            
+                st.session_state.produto_encontrado = produto
+            
+            
+            st.text_input(
+            
+                "Código Produto",
+            
+                key="codigo_produto",
+            
+                on_change=atualizar_produto
+            
+            )
             
             
             st.text_input(
             
                 "Produto",
             
-                value=produto,
+                value=st.session_state.produto_encontrado,
             
                 disabled=True
             
