@@ -183,25 +183,14 @@ def buscar_produto_codigo(codigo):
         supabase
 
         .table(
-
             "codigos_produto"
-
         )
 
-        .select(
+        .select("nome")
 
-            "nome"
-
-        )
-
-        .filter(
-
+        .eq(
             "codigo",
-
-            "eq",
-
             codigo
-
         )
 
         .execute()
