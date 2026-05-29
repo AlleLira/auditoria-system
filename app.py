@@ -790,13 +790,12 @@ with aba2:
             
             
             codigo = st.text_input(
-                "Código Produto",
-                key="codigo_produto"
+                "Código Produto"
             )
             
+            produto_placeholder = st.empty()
             
             produto = ""
-            
             
             if codigo:
             
@@ -805,10 +804,14 @@ with aba2:
                 )
             
             
-            st.text_input(
+            produto_placeholder.text_input(
+            
                 "Produto",
+            
                 value=produto,
+            
                 disabled=True
+            
             )
 
 
