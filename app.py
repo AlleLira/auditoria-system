@@ -852,7 +852,7 @@ with aba2:
                             dav,
 
                             "codigo":
-                            st.session_state.codigo_produto,
+                            codigo,
                             
                             "produto":
                             produto,
