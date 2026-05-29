@@ -746,153 +746,59 @@ with aba2:
 
     # MODAL NOVA ENCOMENDA
     if st.session_state.abrir_nova_encomenda:
-
-
-        @st.dialog(
-            "Cadastrar Encomenda"
-        )
+    
+        @st.dialog("Cadastrar Encomenda")
         def modal_encomenda():
-
-            bloco = st.selectbox(
-
-                "Bloco",
-
-                BLOCOS
-
-            )
-
-
-            loja = st.selectbox(
-
-                "Loja",
-
-                LOJAS.get(
-                    bloco,
-                    []
-                )
-
-            )
-
-
-            data = st.date_input(
-                "Data"
-            )
-
-
-            dav = st.text_input(
-                "DAV"
-            )
-
-
+            bloco = st.selectbox("Bloco", BLOCOS)
+            loja = st.selectbox("Loja", LOJAS.get(bloco, []))
+            data = st.date_input("Data")
+            dav = st.text_input("DAV")
+    
+            codigo_produto = st.text_input("Código Produto")
+    
             if "produto_encontrado" not in st.session_state:
-            
                 st.session_state.produto_encontrado = ""
-            
-            
+    
+            if st.button("Buscar Produto"):
+                resultado = buscar_produto_codigo(codigo_produto)
+                st.session_state.produto_encontrado = resultado
+                if resultado:
+                    st.success(f"Produto encontrado: {resultado}")
+                else:
+                    st.warning("Nenhum produto encontrado para esse código.")
+    
             st.text_input(
-            
-                "Código Produto",
-            
-                key="codigo_produto"
-            
-            )
-            
-            
-            if st.button(
-            
-                "Buscar Produto"
-            
-            ):
-            
-                codigo_digitado = st.session_state.codigo_produto
-            
-                st.session_state.produto_encontrado = buscar_produto_codigo(
-            
-                    codigo_digitado
-            
-                )
-            
-            
-            st.text_input(
-            
                 "Produto",
-            
                 value=st.session_state.produto_encontrado,
-            
                 disabled=True
-            
             )
-
-            quantidade = st.number_input(
-
-                "Quantidade",
-
-                min_value=1,
-
-                step=1
-
-            )
-
-
+    
+            quantidade = st.number_input("Quantidade", min_value=1, step=1)
+    
             col_salvar, col_cancelar = st.columns(2)
-
-
+    
             with col_salvar:
-
-                if st.button(
-                    "Salvar"
-                ):
-
-                    salvar_entrada_produto(
-
-                        {
-
-                            "bloco":
-                            bloco,
-
-                            "loja":
-                            loja,
-
-                            "data":
-                            str(data),
-
-                            "dav":
-                            dav,
-
-                            "codigo":
-                            st.session_state.codigo_produto,
-                            
-                            "produto":
-                            st.session_state.produto_encontrado,
-
-                            "quantidade":
-                            quantidade
-
-                        }
-
-                    )
-
+                if st.button("Salvar"):
+                    salvar_entrada_produto({
+                        "bloco": bloco,
+                        "loja": loja,
+                        "data": str(data),
+                        "dav": dav,
+                        "codigo": codigo_produto,
+                        "produto": st.session_state.produto_encontrado,
+                        "quantidade": quantidade
+                    })
                     st.session_state.abrir_nova_encomenda = False
-
-                    st.success(
-                        "Cadastro realizado!"
-                    )
-
+                    st.success("Cadastro realizado!")
                     st.rerun()
-
-
+    
             with col_cancelar:
-
-                if st.button(
-                    "Cancelar"
-                ):
-
+                if st.button("Cancelar"):
                     st.session_state.abrir_nova_encomenda = False
-
                     st.rerun()
-
-
+    
         modal_encomenda()
+
 
 
     # MODAL BUSCA DAV
