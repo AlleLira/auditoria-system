@@ -784,25 +784,32 @@ with aba2:
             )
 
 
-            # INICIALIZA SESSION
             if "produto_encontrado" not in st.session_state:
             
                 st.session_state.produto_encontrado = ""
             
             
-            codigo = st.text_input(
+            st.text_input(
+            
                 "Código Produto",
+            
                 key="codigo_produto"
+            
             )
             
             
             if st.button(
-                "Buscar Produto",
-                key="btn_buscar_produto"
+            
+                "Buscar Produto"
+            
             ):
             
+                codigo_digitado = st.session_state.codigo_produto
+            
                 st.session_state.produto_encontrado = buscar_produto_codigo(
-                    codigo
+            
+                    codigo_digitado
+            
                 )
             
             
@@ -810,7 +817,7 @@ with aba2:
             
                 "Produto",
             
-                st.session_state.produto_encontrado,
+                value=st.session_state.produto_encontrado,
             
                 disabled=True
             
