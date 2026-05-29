@@ -784,41 +784,31 @@ with aba2:
             )
 
 
-            if "produto_encontrado" not in st.session_state:
+            if "codigo_produto" not in st.session_state:
             
-                st.session_state.produto_encontrado = ""
-            
-            
-            def atualizar_produto():
-            
-                codigo_digitado = st.session_state.codigo_produto
-            
-                produto = buscar_produto_codigo(
-                    codigo_digitado
-                )
-            
-                st.session_state.produto_encontrado = produto
+                st.session_state.codigo_produto = ""
             
             
-            st.text_input(
-            
+            codigo = st.text_input(
                 "Código Produto",
-            
-                key="codigo_produto",
-            
-                on_change=atualizar_produto
-            
+                key="codigo_produto"
             )
             
             
+            produto = ""
+            
+            
+            if codigo:
+            
+                produto = buscar_produto_codigo(
+                    codigo
+                )
+            
+            
             st.text_input(
-            
                 "Produto",
-            
-                value=st.session_state.produto_encontrado,
-            
+                value=produto,
                 disabled=True
-            
             )
 
 
@@ -859,8 +849,8 @@ with aba2:
                             dav,
 
                             "codigo":
-                            codigo,
-
+                            st.session_state.codigo_produto,
+                            
                             "produto":
                             produto,
 
