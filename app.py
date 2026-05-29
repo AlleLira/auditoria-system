@@ -784,38 +784,33 @@ with aba2:
             )
 
 
-            if "codigo_produto" not in st.session_state:
-            
-                st.session_state.codigo_produto = ""
-            
-            
-            codigo = st.text_input(
-                "Código Produto"
-            )
-            
-            produto = ""
-            
-            if st.button(
-                "Buscar Produto"
-            ):
-            
-                produto = buscar_produto_codigo(
-                    codigo
-                )
-            
-                st.session_state.produto_encontrado = produto
-            
-            
+            # INICIALIZA SESSION
             if "produto_encontrado" not in st.session_state:
             
                 st.session_state.produto_encontrado = ""
+            
+            
+            codigo = st.text_input(
+                "Código Produto",
+                key="codigo_produto"
+            )
+            
+            
+            if st.button(
+                "Buscar Produto",
+                key="btn_buscar_produto"
+            ):
+            
+                st.session_state.produto_encontrado = buscar_produto_codigo(
+                    codigo
+                )
             
             
             st.text_input(
             
                 "Produto",
             
-                value=st.session_state.produto_encontrado,
+                st.session_state.produto_encontrado,
             
                 disabled=True
             
@@ -858,7 +853,7 @@ with aba2:
                             dav,
 
                             "codigo":
-                            codigo,
+                            st.session_state.codigo_produto,
                             
                             "produto":
                             st.session_state.produto_encontrado,
