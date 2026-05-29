@@ -760,8 +760,12 @@ with aba2:
                 st.session_state.produto_encontrado = ""
     
             if st.button("Buscar Produto"):
-                resultado = buscar_produto_codigo(codigo_produto)
+                codigo_digitado = st.session_state.codigo_produto
+                resultado = buscar_produto_codigo(codigo_digitado)
                 st.session_state.produto_encontrado = resultado
+            
+                st.write("DEBUG:", resultado)  # mostra na tela o que veio
+            
                 if resultado:
                     st.success(f"Produto encontrado: {resultado}")
                 else:
