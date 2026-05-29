@@ -184,9 +184,10 @@ def buscar_produto_codigo(codigo):
     # Debug: veja o que vem do banco
     print("Resposta Supabase:", response.data)
 
-    if response.data:
+    if response.data and len(response.data) > 0:
         return response.data[0]["nome"]
 
     return ""
+
 
 
